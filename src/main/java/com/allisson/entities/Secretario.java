@@ -30,6 +30,10 @@ public class Secretario implements Serializable{
 	@JoinColumn(name="departamento")
 	private Departamento departamento;
 	
+	@OneToMany(mappedBy = "secretario", fetch = FetchType.EAGER, orphanRemoval=true)
+	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
+	private List<Dependente> dependentes = new ArrayList<>();
+	
 	private String nome;
 	private String endereco;
 	private String sexo;
@@ -37,9 +41,7 @@ public class Secretario implements Serializable{
 	private Double salario;
 	private String grauEscolaridade;
 	
-	@OneToMany(mappedBy = "secretario", fetch = FetchType.EAGER, orphanRemoval=true)
-	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
-	private List<Dependente> dependentes = new ArrayList<>();
+	
 	
 	public Secretario() {
 		super();

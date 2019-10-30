@@ -291,10 +291,25 @@ public class DepartamentoController {
 
 			}
 			
-			System.out.println("\t \n Projetos \n");
+			System.out.println("Projetos \n");
 			for(Projeto projeto : departamento.getProjetos()) {
 				System.out.println("\t Projeto " + projeto.getNome() + "\n");
-				System.out.println("\t \t Periodo de Tempo: " + projeto.getPeriodoTempo());
+				System.out.println("\t \t Id: " + projeto.getId());
+				System.out.println("\t \t Id do Departamento: " + projeto.getDepartamento().getId());
+				System.out.println("\t \t Nome do Departamento: " + projeto.getDepartamento().getNome());
+				System.out.println("\t \t Periodo de projeto: " + projeto.getPeriodoTempo());
+				System.out.println("\n");
+				System.out.println("\t \t Trabalhos \n");
+				for(Trabalho trabalho : projeto.getTrabalhos()) {
+					System.out.println("\t \t \t Id: " + trabalho.getId());
+					System.out.println("\t \t \t Projeto: "+ trabalho.getProjeto().getNome());
+					System.out.println("\t \t \t Pesquisador: " + trabalho.getPesquisador().getNome());
+					System.out.println("\t \t \t Id do Pesquisador: "+trabalho.getPesquisador().getId());
+					System.out.println("\t \t \t Area(Atuacao): " + trabalho.getPesquisador().getAreaAtuacao());
+					System.out.println("\t \t \t Horas Semanais: " + trabalho.getHorasSemanais());
+					System.out.println("\n");
+				}
+				System.out.println("\n");
 			}
 		}catch(Exception e) {
 			

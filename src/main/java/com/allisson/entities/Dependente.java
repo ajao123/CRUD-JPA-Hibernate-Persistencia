@@ -23,16 +23,8 @@ public class Dependente implements Serializable{
 	private String grauParentesco;
 	
 	@ManyToOne
-	@JoinColumn(name="pesquisador")
-	private Pesquisador pesquisador = null;
-	
-	@ManyToOne
-	@JoinColumn(name="secretario")
-	private Secretario secretario = null;
-	
-	@ManyToOne
-	@JoinColumn(name="funcionarioLimpeza")
-	private FuncionarioLimpeza funcionarioLimpeza = null;
+	@JoinColumn(name="funcionario")
+	private Funcionario funcionario;
 	
 	public Dependente() {
 		super();
@@ -87,28 +79,14 @@ public class Dependente implements Serializable{
 		this.grauParentesco = grauParentesco;
 	}
 
-	public Pesquisador getPesquisador() {
-		return pesquisador;
+	
+
+	public Funcionario getFuncionario() {
+		return funcionario;
 	}
 
-	public void setPesquisador(Pesquisador pesquisador) {
-		this.pesquisador = pesquisador;
-	}
-
-	public Secretario getSecretario() {
-		return secretario;
-	}
-
-	public void setSecretario(Secretario secretario) {
-		this.secretario = secretario;
-	}
-
-	public FuncionarioLimpeza getFuncionarioLimpeza() {
-		return funcionarioLimpeza;
-	}
-
-	public void setFuncionarioLimpeza(FuncionarioLimpeza funcionarioLimpeza) {
-		this.funcionarioLimpeza = funcionarioLimpeza;
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 	}
 
 	@Override

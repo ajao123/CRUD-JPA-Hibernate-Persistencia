@@ -3,9 +3,11 @@ package com.allisson.controllers;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
+
 import com.allisson.dao.services.DepartamentoDAO;
 import com.allisson.entities.Departamento;
 import com.allisson.entities.Dependente;
+import com.allisson.entities.Funcionario;
 import com.allisson.entities.FuncionarioLimpeza;
 import com.allisson.entities.Pesquisador;
 import com.allisson.entities.Projeto;
@@ -15,11 +17,8 @@ import com.allisson.entities.jpadao.DepartamentoJPADAO;
 
 public class DepartamentoController {
 
-	
 	static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-
-	
 	public static void buscarDepartamentoComDAO() {
 		
 		
@@ -35,83 +34,50 @@ public class DepartamentoController {
 					System.out.println("Id: " + departamento.getId());
 					System.out.println("Nome: " + departamento.getNome()+"\n");
 					System.out.println("Funcionarios \n");
-					System.out.println("\t Pesquisadores \n");
-					for(Pesquisador pesquisador : departamento.getPesquisadores()) {
+					
+					
+					
+					for(Funcionario funcionario : departamento.getFuncionarios()) {
 						
-						System.out.println("\t \t Pesquisador " + pesquisador.getNome() + "\n");
-						System.out.println("\t \t \t Id: " + pesquisador.getId());
-						System.out.println("\t \t \t Endereco: " + pesquisador.getEndereco());
-						System.out.println("\t \t \t Sexo: " + pesquisador.getSexo());
-						System.out.println("\t \t \t Data de Nascimento: " + pesquisador.getDataNascimento());
-						System.out.println("\t \t \t Salario: " + pesquisador.getSalario());
-						System.out.println("\t \t \t Area de Atuacao: " + pesquisador.getAreaAtuacao());
+						System.out.println("\t Id: " + funcionario.getId());
+						System.out.println("\t Endereco: " + funcionario.getEndereco());
+						System.out.println("\t Sexo: " + funcionario.getSexo());
+						System.out.println("\t Data de Nascimento: " + funcionario.getDataNascimento());
+						System.out.println("\t Salario: " + funcionario.getSalario());
 						
-						System.out.println("\t \t \t Dependentes \n");
-						for(Dependente dependente : pesquisador.getDependentes()) {
+						if(funcionario instanceof Pesquisador) {
+							Pesquisador pesquisador = (Pesquisador) funcionario;
+							System.out.println("\t Area de Atuacao: " + pesquisador.getAreaAtuacao());
+							System.out.println("\t Funcao: Pesquisador");
+						}else if(funcionario instanceof Secretario) {
 							
-							System.out.println("\t \t \t \t Dependente " + dependente.getNome() + "\n");
-							System.out.println("\t \t \t \t \t Id: " + dependente.getId());
-							System.out.println("\t \t \t \t \t Sexo: " + dependente.getSexo());
-							System.out.println("\t \t \t \t \t Data de Nascimento: " + dependente.getDataNascimento());
-							System.out.println("\t \t \t \t \t Grau Parentesco: " + dependente.getGrauParentesco());
+							Secretario secretario = (Secretario) funcionario;
+							System.out.println("\t Grau de Escolaridade: " + secretario.getGrauEscolaridade());
+							System.out.println("\t Funcao: Secretario");
+							
+						}else if(funcionario instanceof FuncionarioLimpeza) {
+							
+							FuncionarioLimpeza fl = (FuncionarioLimpeza) funcionario;
+							System.out.println("\t Informacoes do Supervisor: " + fl.getSupervisorInformacoes());
+							System.out.println("\t Cargo: " + fl.getCargo());
+							System.out.println("\t Jornada de Trabalho: " + fl.getJornadaTrabalho());
+							System.out.println("\t Funcao: Funcionario de Limpeza");
+						}
+	
+						System.out.println("\t Dependentes \n");
+						for(Dependente dependente : funcionario.getDependentes()) {
+							
+							System.out.println("\t \t Dependente " + dependente.getNome() + "\n");
+							System.out.println("\t \t Id: " + dependente.getId());
+							System.out.println("\t \t Sexo: " + dependente.getSexo());
+							System.out.println("\t \t Data de Nascimento: " + dependente.getDataNascimento());
+							System.out.println("\t \t Grau Parentesco: " + dependente.getGrauParentesco());
 						
 						}
 						System.out.println("\n");
 					}
 					System.out.println("\n");
-					
-					System.out.println("\t Secretarios \n");
-					for(Secretario secretario : departamento.getSecretarios()) {
-						System.out.println("\t \t Secretario " + secretario.getNome() + "\n");
-						System.out.println("\t \t \t Id: " + secretario.getId());
-						System.out.println("\t \t \t Endereco: " + secretario.getEndereco());
-						System.out.println("\t \t \t Sexo: " + secretario.getSexo());
-						System.out.println("\t \t \t Data de Nascimento: " +secretario.getDataNascimento());
-						System.out.println("\t \t \t Salario: " + secretario.getSalario());
-						System.out.println("\t \t \t Grau de Escolaridade: " + secretario.getGrauEscolaridade());
-						
-						System.out.println("\t \t \t Dependentes \n");
-						for(Dependente dependente : secretario.getDependentes()) {
-							
-							System.out.println("\t \t \t \t Dependente " + dependente.getNome() + "\n");
-							System.out.println("\t \t \t \t \t Id: " + dependente.getId());
-							System.out.println("\t \t \t \t \t Sexo: " + dependente.getSexo());
-							System.out.println("\t \t \t \t \t Data de Nascimento: " + dependente.getDataNascimento());
-							System.out.println("\t \t \t \t \t Grau Parentesco: " + dependente.getGrauParentesco());
-						
-						}
-						System.out.println("\n");
-					}
-					System.out.println("\n");
-					
-					System.out.println("\t Funcionarios de Limpeza \n");
-					for(FuncionarioLimpeza fl : departamento.getFuncionariosLimpeza()) {
-						System.out.println("\t \t Funcionario " + fl.getNome() + "\n");
-						System.out.println("\t \t \t Id: " + fl.getId());
-						System.out.println("\t \t \t Endereco: " + fl.getEndereco());
-						System.out.println("\t \t \t Sexo: " + fl.getSexo());
-						System.out.println("\t \t \t Data de Nascimento: " + fl.getDataNascimento());
-						System.out.println("\t \t \t Salario: " + fl.getSalario());
-						System.out.println("\t \t \t Informacoes do Supervisor: " + fl.getSupervisorInformacoes());
-						System.out.println("\t \t \t Cargo: " + fl.getCargo());
-						System.out.println("\t \t \t Jornada de Trabalho: " + fl.getJornadaTrabalho());
-						
-						System.out.println("\t \t \t Dependentes \n");
-						for(Dependente dependente : fl.getDependentes()) {
-							
-							System.out.println("\t \t \t \t Dependente " + dependente.getNome() + "\n");
-							System.out.println("\t \t \t \t \t Id: " + dependente.getId());
-							System.out.println("\t \t \t \t \t Sexo: " + dependente.getSexo());
-							System.out.println("\t \t \t \t \t Data de Nascimento: " + dependente.getDataNascimento());
-							System.out.println("\t \t \t \t \t Grau Parentesco: " + dependente.getGrauParentesco());
-							System.out.println("\n");
-						}
-						System.out.println("\n");
-						
-					}
-					
-					System.out.println("\n");
-					
+
 					System.out.println("Projetos \n");
 					for(Projeto projeto : departamento.getProjetos()) {
 						System.out.println("\t Projeto " + projeto.getNome() + "\n");
@@ -255,42 +221,54 @@ public class DepartamentoController {
 			Departamento departamento = cDao.find(id);
 			cDao.close();
 			
+			System.out.println("===========================================================");
 			System.out.println("Id: " + departamento.getId());
-			System.out.println("Nome: " + departamento.getNome());
+			System.out.println("Nome: " + departamento.getNome()+"\n");
+			System.out.println("Funcionarios \n");
 			
-			System.out.println("\t \nPesquisadores \n");
-			for(Pesquisador pesquisador : departamento.getPesquisadores()) {
-				System.out.println("\t Pesquisador " + pesquisador.getNome() + "\n");
-				System.out.println("\t \t Endereco: " + pesquisador.getEndereco());
-				System.out.println("\t \t Sexo: " + pesquisador.getSexo());
-				System.out.println("\t \t Data de Nascimento: " + pesquisador.getDataNascimento());
-				System.out.println("\t \t Salario: " + pesquisador.getSalario());
-				System.out.println("\t \t Area de Atuacao: " + pesquisador.getAreaAtuacao()+"\n \n");
-			}
 			
-			System.out.println("\t \nSecretarios \n");
-			for(Secretario secretario : departamento.getSecretarios()) {
-				System.out.println("\t Secretario " + secretario.getNome() + "\n");
-				System.out.println("\t \t Endereco: " + secretario.getEndereco());
-				System.out.println("\t \t Sexo: " + secretario.getSexo());
-				System.out.println("\t \t Data de Nascimento: " +secretario.getDataNascimento());
-				System.out.println("\t \t Salario: " + secretario.getSalario());
-				System.out.println("\t \t Grau de Escolaridade: " + secretario.getGrauEscolaridade()+"\n \n");
-			}
 			
-			System.out.println("\t \nFuncionarios de Limpeza \n");
-			for(FuncionarioLimpeza fl : departamento.getFuncionariosLimpeza()) {
-				System.out.println("\t Funcionario " + fl.getNome() + "\n");
-				System.out.println("\t \t Endereco: " + fl.getEndereco());
-				System.out.println("\t \t Sexo: " + fl.getSexo());
-				System.out.println("\t \t Data de Nascimento: " + fl.getDataNascimento());
-				System.out.println("\t \t Salario: " + fl.getSalario());
-				System.out.println("\t \t Informacoes do Supervisor: " + fl.getSupervisorInformacoes());
-				System.out.println("\t \t Cargo: " + fl.getCargo());
-				System.out.println("\t \t Jornada de Trabalho: " + fl.getJornadaTrabalho()+"\n \n");
+			for(Funcionario funcionario : departamento.getFuncionarios()) {
+				
+				System.out.println("\t Id: " + funcionario.getId());
+				System.out.println("\t Endereco: " + funcionario.getEndereco());
+				System.out.println("\t Sexo: " + funcionario.getSexo());
+				System.out.println("\t Data de Nascimento: " + funcionario.getDataNascimento());
+				System.out.println("\t Salario: " + funcionario.getSalario());
+				
+				if(funcionario instanceof Pesquisador) {
+					Pesquisador pesquisador = (Pesquisador) funcionario;
+					System.out.println("\t Area de Atuacao: " + pesquisador.getAreaAtuacao());
+					System.out.println("\t Funcao: Pesquisador");
+				}else if(funcionario instanceof Secretario) {
+					
+					Secretario secretario = (Secretario) funcionario;
+					System.out.println("\t Grau de Escolaridade: " + secretario.getGrauEscolaridade());
+					System.out.println("\t Funcao: Secretario");
+					
+				}else if(funcionario instanceof FuncionarioLimpeza) {
+					
+					FuncionarioLimpeza fl = (FuncionarioLimpeza) funcionario;
+					System.out.println("\t Informacoes do Supervisor: " + fl.getSupervisorInformacoes());
+					System.out.println("\t Cargo: " + fl.getCargo());
+					System.out.println("\t Jornada de Trabalho: " + fl.getJornadaTrabalho());
+					System.out.println("\t Funcao: Funcionario de Limpeza");
+				}
 
+				System.out.println("\t Dependentes \n");
+				for(Dependente dependente : funcionario.getDependentes()) {
+					
+					System.out.println("\t \t Dependente " + dependente.getNome() + "\n");
+					System.out.println("\t \t Id: " + dependente.getId());
+					System.out.println("\t \t Sexo: " + dependente.getSexo());
+					System.out.println("\t \t Data de Nascimento: " + dependente.getDataNascimento());
+					System.out.println("\t \t Grau Parentesco: " + dependente.getGrauParentesco());
+				
+				}
+				System.out.println("\n");
 			}
-			
+			System.out.println("\n");
+
 			System.out.println("Projetos \n");
 			for(Projeto projeto : departamento.getProjetos()) {
 				System.out.println("\t Projeto " + projeto.getNome() + "\n");
@@ -311,6 +289,8 @@ public class DepartamentoController {
 				}
 				System.out.println("\n");
 			}
+			System.out.println("\n");
+			System.out.println("===========================================================");
 		}catch(Exception e) {
 			
 			System.out.println("\n \n"+"\t \t Erro: Busca nao pode ser concluida.");

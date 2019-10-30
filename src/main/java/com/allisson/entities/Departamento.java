@@ -26,19 +26,12 @@ public class Departamento implements Serializable{
 	
 	@OneToMany(mappedBy = "departamento", fetch = FetchType.EAGER, orphanRemoval=true)
 	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
-	private List<Pesquisador> pesquisadores = new ArrayList<>();
+	private List<Funcionario> funcionarios;
 	
+
 	@OneToMany(mappedBy = "departamento", fetch = FetchType.EAGER, orphanRemoval=true)
 	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
-	private List<Secretario> secretarios = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "departamento", fetch = FetchType.EAGER, orphanRemoval=true)
-	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
-	private List<FuncionarioLimpeza> funcionariosLimpeza = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "departamento", fetch = FetchType.EAGER, orphanRemoval=true)
-	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
-	private List<Projeto> projetos = new ArrayList<>();
+	private List<Projeto> projetos;
 	
 	public Departamento() {
 		super();
@@ -48,6 +41,8 @@ public class Departamento implements Serializable{
 		super();
 		this.id = id;
 		this.nome = nome;
+		funcionarios= new ArrayList<>();
+		projetos = new ArrayList<>();
 	}
 
 	public Long getId() {
@@ -91,30 +86,12 @@ public class Departamento implements Serializable{
 		return true;
 	}
 
-	public List<Pesquisador> getPesquisadores() {
-		return pesquisadores;
-	}
-	
-	
-	public void setPesquisadores(List<Pesquisador> pesquisadores) {
-		this.pesquisadores = pesquisadores;
-	}
-	
-
-	public List<Secretario> getSecretarios() {
-		return secretarios;
+	public List<Funcionario> getFuncionarios() {
+		return funcionarios;
 	}
 
-	public void setSecretarios(List<Secretario> secretarios) {
-		this.secretarios = secretarios;
-	}
-
-	public List<FuncionarioLimpeza> getFuncionariosLimpeza() {
-		return funcionariosLimpeza;
-	}
-
-	public void setFuncionariosLimpeza(List<FuncionarioLimpeza> funcionariosLimpeza) {
-		this.funcionariosLimpeza = funcionariosLimpeza;
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
 	}
 
 	public List<Projeto> getProjetos() {

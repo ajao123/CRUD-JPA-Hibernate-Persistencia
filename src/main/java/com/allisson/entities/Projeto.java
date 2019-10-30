@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -31,7 +30,7 @@ public class Projeto implements Serializable{
 	
 	@OneToMany(mappedBy = "projeto", fetch = FetchType.EAGER, orphanRemoval=true)
 	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
-	private List<Trabalho> trabalhos = new ArrayList<>();
+	private List<Trabalho> trabalhos;
 	
 	private String nome;
 	private String periodoTempo;
@@ -46,6 +45,7 @@ public class Projeto implements Serializable{
 		this.id = id;
 		this.nome = nome;
 		this.periodoTempo = periodoTempo;
+		trabalhos = new ArrayList<>();
 	}
 
 	public Long getId() {
